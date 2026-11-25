@@ -12,7 +12,14 @@ Acest proiect reprezintă o implementare în limbajul C++ a jocului clasic **Tic
 ## Structuri de date și clase
 - `Point` (`point.hpp`) — structură care reține coordonatele (`row`, `col`) unei poziții de pe tablă.
 - `Cell` (`cell.hpp`) — tip enumerare (`enum class`) care definește starea unei celule: `Empty`, `X` sau `O`.
-- `Board` (`board.hpp`) — reprezintă tabla de joc 3x3, gestionează validarea mutărilor și verificarea câștigătorului.
-- `Painter` (`painter.hpp`) — componenta responsabilă de afișarea tablei de joc și a mesajelor către utilizator.
-- `Listener` (`listener.hpp`) — componenta care preia datele de intrare (mutările) de la jucător.
-- `GameEngine` (`game_engine.hpp`) — motorul principal care inițializează jocul, alternează turele jucătorilor și controlează bucla de joc.
+- `Board` (`board.hpp`, `board.cpp`) — reprezintă tabla de joc 3x3, gestionează validarea mutărilor și verificarea câștigătorului.
+- `Painter` (`painter.hpp`, `painter.cpp`) — componenta responsabilă de afișarea tablei de joc și a mesajelor către utilizator.
+- `Listener` (`listener.hpp`, `listener.cpp`) — componenta care preia datele de intrare (mutările) de la jucător.
+- `GameEngine` (`game_engine.hpp`, `game_engine.cpp`) — motorul principal care inițializează jocul, alternează turele jucătorilor și controlează bucla de joc.
+
+## Construirea și rularea proiectului
+Pentru a compila proiectul din linia de comandă pe Windows (folosind compilatorul `g++`), rulați scriptul `build.cmd`:
+
+```cmd
+.\build.cmd
+.\tictactoe.exe
