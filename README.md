@@ -1,25 +1,26 @@
-# TicTacToeGame (X și O)
+# Tic-Tac-Toe (X si O) - Proiect C++ OOP
 
-## Descrierea proiectului
-Acest proiect reprezintă o implementare în limbajul C++ a jocului clasic **Tic-Tac-Toe (X și O)**, structurat modular pentru a separa datele jocului, motorul de execuție, afișarea și citirea comenzilor.
+Aplicatie consola modulara dezvoltata in C++17 pe parcursul a 6 lucrari de laborator.
 
-## Regulile jocului
-1. Jocul se desfășoară pe o tablă pătrată de dimensiune **3x3** între doi jucători: **X** și **O**.
-2. Jucătorii mută pe rând, alegând coordonatele (rând și coloană, de la 0 la 2) unei căsuțe libere.
-3. Primul jucător care reușește să alinieze 3 simboluri identice pe orizontală, verticală sau diagonală câștigă partida.
-4. Dacă toate cele 9 căsuțe sunt completate fără ca vreun jucător să facă linie, jocul se termină la egalitate (remiză).
+## Structura Proiectului
+- cell.hpp, point.hpp: Tipuri de date de baza si operatori supraincarcati (==, !=, <<).
+- board.hpp: Clasa sablon Board<N> pentru tabla de joc, validarea mutarilor si istoricul partidei.
+- player.hpp, player.cpp: Ierarhie polimorfica (Player, HumanPlayer, BotPlayer).
+- painter.hpp, painter.cpp: Randarea tablei si a mesajelor in consola.
+- listener.hpp, listener.cpp: Citirea si validarea intrarilor de la tastatura.
+- game_exception.hpp: Ierarhie de exceptii (GameException, InvalidMoveException).
+- score_manager.hpp, score_manager.cpp: Persistenta rezultatelor in fisier (scores.txt) si statistici STL.
+- game_engine.hpp, game_engine.cpp: Logica principala a jocului gestionata cu std::unique_ptr.
 
-## Structuri de date și clase
-- `Point` (`point.hpp`) — structură care reține coordonatele (`row`, `col`) unei poziții de pe tablă.
-- `Cell` (`cell.hpp`) — tip enumerare (`enum class`) care definește starea unei celule: `Empty`, `X` sau `O`.
-- `Board` (`board.hpp`, `board.cpp`) — reprezintă tabla de joc 3x3, gestionează validarea mutărilor și verificarea câștigătorului.
-- `Painter` (`painter.hpp`, `painter.cpp`) — componenta responsabilă de afișarea tablei de joc și a mesajelor către utilizator.
-- `Listener` (`listener.hpp`, `listener.cpp`) — componenta care preia datele de intrare (mutările) de la jucător.
-- `GameEngine` (`game_engine.hpp`, `game_engine.cpp`) — motorul principal care inițializează jocul, alternează turele jucătorilor și controlează bucla de joc.
-
-## Construirea și rularea proiectului
-Pentru a compila proiectul din linia de comandă pe Windows (folosind compilatorul `g++`), rulați scriptul `build.cmd`:
-
-```cmd
+## Compilare si Rulare (Windows / MinGW g++)
+Ruleaza in terminal:
 .\build.cmd
 .\tictactoe.exe
+
+## Evolutia pe Ramuri (Branches)
+- lab01: Definirea structurii proiectului si a fisierelor header (.hpp).
+- lab02: Implementarea claselor (.cpp), scriptul de compilare build.cmd si .gitignore.
+- lab03: Constructori, supraincarcarea operatorilor si polimorfism (HumanPlayer vs BotPlayer).
+- lab04: Exceptii personalizate, clasa template Board<N> si containere STL (std::vector).
+- lab05: Salvarea scorurilor in fisiere (<fstream>) si algoritmi STL (std::count_if, std::accumulate).
+- lab06: Gestionare moderna a memoriei cu std::unique_ptr si documentatie finala.
