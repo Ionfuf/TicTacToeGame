@@ -8,6 +8,36 @@ Board::Board() {
     }
 }
 
+Board::Board(const Board& other) {
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 3; ++c) {
+            _grid[r][c] = other._grid[r][c];
+        }
+    }
+}
+
+Board& Board::operator=(const Board& other) {
+    if (this != &other) {
+        for (int r = 0; r < 3; ++r) {
+            for (int c = 0; c < 3; ++c) {
+                _grid[r][c] = other._grid[r][c];
+            }
+        }
+    }
+    return *this;
+}
+
+bool Board::operator==(const Board& other) const {
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 3; ++c) {
+            if (_grid[r][c] != other._grid[r][c]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool Board::MakeMove(Point pos, Cell player) {
     if (pos.row < 0 || pos.row >= 3 || pos.col < 0 || pos.col >= 3) {
         return false;
@@ -53,4 +83,22 @@ Cell Board::CheckWinner() const {
         return _grid[0][2];
     }
     return Cell::Empty;
+}
+
+std::ostream& operator<<(std::ostream& os, const Board& board) {
+    os << "\n  0 1 2\n";
+    for (int r = 0; r < 3; ++r) {
+        os << r << " ";
+        for (int c = 0; c < 3; ++c) {
+            Cell cell = board.GetCell({r, c});
+            char symbol = '.';
+            if (cell == Cell::X) symbol = 'X';
+            else if (cell == Cell::O) symbol = 'O';
+            os << symbol << (c < 2 ? "|" : "");
+        }
+        os << "\n";
+        if (r < 2) os << "  -+-+-\n";
+    }
+    os << "\n";
+    return os;
 }
