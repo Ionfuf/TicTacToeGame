@@ -16,7 +16,7 @@ void GameEngine::Init() {
     delete _players[0];
     delete _players[1];
 
-    _board = Board();
+    _board = Board<3>();
     _currentIndex = 0;
 
     int mode = 1;
@@ -26,6 +26,7 @@ void GameEngine::Init() {
         std::cin.ignore(10000, '\n');
         mode = 1;
     }
+    mode = ClampValue(mode, 1, 2);
 
     _players[0] = new HumanPlayer(Cell::X, "Jucator X");
     if (mode == 2) {
@@ -44,23 +45,26 @@ void GameEngine::Run() {
         std::string turnMsg = "Randul lui " + current->GetName() + ":";
         _painter.WriteText({0, 0}, turnMsg.c_str());
 
-        Point move = current->GetMove(_board);
-        if (!_board.MakeMove(move, current->GetSymbol())) {
-            _painter.WriteText({0, 0}, "Mutare invalida! Incearca din nou.");
+        try {
+            Point move = current->GetMove(_board);
+            _board.MakeMove(move, current->GetSymbol());
+        } catch (const InvalidMoveException& ex) {
+            _painter.WriteText({0, 0}, ex.what());
             continue;
         }
 
         Cell winner = _board.CheckWinner();
         if (winner != Cell::Empty) {
             _painter.DrawBoard(_board);
-            std::string winMsg = current->GetName() + " a castigat!";
+            std::string winMsg = current->GetName() + " a castigat! Total mutari: " + std::to_string(_board.GetMoveHistory().size());
             _painter.WriteText({0, 0}, winMsg.c_str());
             break;
         }
 
         if (_board.IsFull()) {
             _painter.DrawBoard(_board);
-            _painter.WriteText({0, 0}, "Egalitate (Remiza)!");
+            std::string drawMsg = "Egalitate (Remiza)! Total mutari: " + std::to_string(_board.GetMoveHistory().size());
+            _painter.WriteText({0, 0}, drawMsg.c_str());
             break;
         }
 

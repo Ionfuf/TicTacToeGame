@@ -5,6 +5,6 @@
 
 class Painter {
 public:
-    void DrawBoard(const Board& board);
+    void DrawBoard(const Board<3>& board);
     void WriteText(Point position, const char* text);
 };

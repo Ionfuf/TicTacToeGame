@@ -1,7 +1,7 @@
 #include "painter.hpp"
 #include <iostream>
 
-void Painter::DrawBoard(const Board& board) {
+void Painter::DrawBoard(const Board<3>& board) {
     std::cout << board;
 }
 

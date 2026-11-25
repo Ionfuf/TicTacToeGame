@@ -15,18 +15,18 @@ public:
     Cell GetSymbol() const { return _symbol; }
     std::string GetName() const { return _name; }
 
-    virtual Point GetMove(const Board& board) = 0;
+    virtual Point GetMove(const Board<3>& board) = 0;
 };
 
 class HumanPlayer : public Player {
     Listener _listener;
 public:
     HumanPlayer(Cell symbol, const std::string& name) : Player(symbol, name) {}
-    Point GetMove(const Board& board) override;
+    Point GetMove(const Board<3>& board) override;
 };
 
 class BotPlayer : public Player {
 public:
     BotPlayer(Cell symbol, const std::string& name = "Bot AI") : Player(symbol, name) {}
-    Point GetMove(const Board& board) override;
+    Point GetMove(const Board<3>& board) override;
 };

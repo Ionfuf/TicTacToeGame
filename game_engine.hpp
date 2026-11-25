@@ -5,7 +5,7 @@
 #include "player.hpp"
 
 class GameEngine {
-    Board _board;
+    Board<3> _board;
     Painter _painter;
     Player* _players[2];
     int _currentIndex;
