@@ -1,4 +1,5 @@
 #include "game_engine.hpp"
+#include "score_manager.hpp"
 #include <iostream>
 #include <string>
 
@@ -19,6 +20,9 @@ void GameEngine::Init() {
     _board = Board<3>();
     _currentIndex = 0;
 
+    ScoreManager scoreMgr;
+    scoreMgr.DisplayStatistics();
+
     int mode = 1;
     std::cout << "Alege modul de joc:\n1. Om vs Calculator (Bot)\n2. Om vs Om\nOptiune: ";
     if (!(std::cin >> mode)) {
@@ -38,6 +42,8 @@ void GameEngine::Init() {
 
 void GameEngine::Run() {
     Init();
+    ScoreManager scoreMgr;
+
     while (true) {
         _painter.DrawBoard(_board);
         Player* current = _players[_currentIndex];
@@ -54,17 +60,21 @@ void GameEngine::Run() {
         }
 
         Cell winner = _board.CheckWinner();
+        int movesCount = static_cast<int>(_board.GetMoveHistory().size());
+
         if (winner != Cell::Empty) {
             _painter.DrawBoard(_board);
-            std::string winMsg = current->GetName() + " a castigat! Total mutari: " + std::to_string(_board.GetMoveHistory().size());
+            std::string winMsg = current->GetName() + " a castigat! Total mutari: " + std::to_string(movesCount);
             _painter.WriteText({0, 0}, winMsg.c_str());
+            scoreMgr.SaveMatch(current->GetName(), movesCount);
             break;
         }
 
         if (_board.IsFull()) {
             _painter.DrawBoard(_board);
-            std::string drawMsg = "Egalitate (Remiza)! Total mutari: " + std::to_string(_board.GetMoveHistory().size());
+            std::string drawMsg = "Egalitate (Remiza)! Total mutari: " + std::to_string(movesCount);
             _painter.WriteText({0, 0}, drawMsg.c_str());
+            scoreMgr.SaveMatch("Remiza", movesCount);
             break;
         }
 
